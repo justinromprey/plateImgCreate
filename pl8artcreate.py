@@ -40,3 +40,29 @@ for artist in artists:
     # Save the image in the "images" directory with the artist's name as the filename
     image_path = os.path.join('images', f'{artist}.png')
     result.save(image_path)
+
+png_folder = 'images'
+
+# Path to the folder where the converted JPG images will be saved
+jpg_folder = 'jpgs'
+
+# Create the output JPG folder if it doesn't exist
+os.makedirs(jpg_folder, exist_ok=True)
+
+# Iterate over PNG files in the folder
+for filename in os.listdir(png_folder):
+    if filename.endswith('.png'):
+        # Open the PNG image
+        png_path = os.path.join(png_folder, filename)
+        image = Image.open(png_path)
+        
+        # Convert PNG image to JPG format
+        jpg_filename = os.path.splitext(filename)[0] + '.jpg'
+        jpg_path = os.path.join(jpg_folder, jpg_filename)
+        image.convert('RGB').save(jpg_path, 'JPEG')
+        
+        # Close the image
+        image.close()
+
+        # Optional: Remove the original PNG file
+        # os.remove(png_path)
